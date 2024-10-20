@@ -2,16 +2,10 @@
 
 namespace App\Repositories\Order;
 
-
 use App\Models\Order;
 
 class OrderRepository implements IOrderRepository
 {
-
-    /**
-     * @param array $products
-     * @return Order
-     */
     public function createOrder(array $products): Order
     {
         $order = Order::create([]);
@@ -21,6 +15,7 @@ class OrderRepository implements IOrderRepository
         }));
 
         $order->load('products.ingredients');
+
         return $order;
     }
 }

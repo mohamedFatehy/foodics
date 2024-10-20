@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Controllers\ApiControllerController;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreOrderRequest extends ApiRequest
 {
@@ -36,7 +39,12 @@ class StoreOrderRequest extends ApiRequest
             'products.*.product_id.exists' => 'valid product Id required',
             'products.*.quantity.exists' => 'valid product Quantity required',
             'products.*.quantity.required' => 'product Quantity required',
-            'products.*.quantity.min' => 'product Quantity must be at least 1',
+            'products.*.quantity.min' => 'product Quantity must be greater than 0',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(ApiControllerController::FailureResponse($validator->errors()->first(), 422, $validator->errors()->toArray()));
     }
 }

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('merchant_id');
             $table->string('name');
-            $table->string('image_url')->default("avatar.png");
-            $table->string('description')->default("has no description");
+            $table->string('image_url')->default('avatar.png');
+            $table->string('description')->default('has no description');
             $table->timestamps();
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
         });

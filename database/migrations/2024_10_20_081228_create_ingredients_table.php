@@ -18,7 +18,7 @@ return new class extends Migration
             $table->float('daily_total_stock')->unsigned();
             $table->float('current_stock')->unsigned();
             $table->boolean('alert_notification_sent')->default(false);
-            $table->enum("unit", ["g", "kg", "ml", "l"])->default('g');
+            $table->enum('unit', ['g', 'kg', 'ml', 'l'])->default('g');
             $table->timestamps();
 
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');

@@ -2,15 +2,13 @@
 
 namespace App\Repositories\Ingredient;
 
-
 use Illuminate\Support\Facades\DB;
 
 class IngredientRepository implements IIngredientRepository
 {
-
     public function update(array $ingredientUpdates): void
     {
-        if (!empty($ingredientUpdates)) {
+        if (! empty($ingredientUpdates)) {
             $cases = [];
             $ids = [];
 

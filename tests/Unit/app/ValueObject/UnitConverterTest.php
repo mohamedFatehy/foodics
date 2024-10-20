@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Unit\app\ValueObject;
 
 use App\ValueObject\UnitConverter;
@@ -13,7 +14,6 @@ it('test will throws an exception for negative values', function () {
     UnitConverter::fromKgToGram(-5);
 })->throws(InvalidArgumentException::class, 'UnitConverter value must be non-negative');
 
-
 it('test can decimal values of kilograms', function () {
     $result = UnitConverter::fromKgToGram(0.5);
     expect($result)->toBe(500.0);
@@ -23,4 +23,3 @@ it('test convert kilograms to grams', function () {
     $result = UnitConverter::fromKgToGram(20);
     expect($result)->toBe(20000.0);
 });
-

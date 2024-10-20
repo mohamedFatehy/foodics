@@ -24,11 +24,13 @@ class OrderController extends ApiControllerController
     {
         try {
             $this->orderService->create($request->products);
-            return self::SuccessResponse("order created", ResponseStatus::HTTP_CREATED);
+
+            return self::SuccessResponse('order created', ResponseStatus::HTTP_CREATED);
         } catch (\Exception $e) {
             // log error for observability with event_id as identifier for the log searching
-            Log::log('error', $e->getMessage(),['event_id' => LogEventIds::LogEvent_In_Order_Creation]);
-            return self::FailureResponse("failed to create an order");
+            Log::log('error', $e->getMessage(), ['event_id' => LogEventIds::LogEvent_In_Order_Creation]);
+
+            return self::FailureResponse('failed to create an order');
         }
     }
 }

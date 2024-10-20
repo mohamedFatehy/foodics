@@ -3,16 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOrderRequest extends FormRequest
+class StoreOrderRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +23,20 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'products' => 'required|array',
-            'products.*.id' => 'required|exists:products,id',
+            'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'products.required' => 'products list is required',
+            'products.*.product_id.required' => 'product Id required',
+            'products.*.product_id.exists' => 'valid product Id required',
+            'products.*.quantity.exists' => 'valid product Quantity required',
+            'products.*.quantity.required' => 'product Quantity required',
+            'products.*.quantity.min' => 'product Quantity must be at least 1',
         ];
     }
 }

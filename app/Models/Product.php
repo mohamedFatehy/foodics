@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'merchant_id','price'];
+    protected $fillable = ['name', 'merchant_id'];
 
     public function merchant(): BelongsTo
     {
@@ -21,6 +21,6 @@ class Product extends Model
 
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class,'product_ingredients')->withPivot(['ingredient_weight']);
+        return $this->belongsToMany(Ingredient::class,'product_ingredients')->withPivot(['ingredient_weight'])->withTimestamps();;
     }
 }

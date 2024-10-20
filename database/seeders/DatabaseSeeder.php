@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Providers\database\seeders;
+namespace database\seeders;
 
 use App\Models\Ingredient;
 use App\Models\Merchant;
 use App\ValueObject\UnitConverter;
 use Illuminate\Database\Seeder;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -48,8 +49,7 @@ class DatabaseSeeder extends Seeder
 
 
         $product = $merchant->products()->create([
-            'name' => 'Cheese Burger',
-            'price' => 10
+            'name' => 'Cheese Burger'
         ]);
 
         // create cheeseburger ingredients with 150g Beef and 30g Cheese and 20g Onion

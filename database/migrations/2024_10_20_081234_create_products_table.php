@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image_url')->default("avatar.png");
             $table->string('description')->default("has no description");
+            $table->float('price')->unsigned();
             $table->timestamps();
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
         });

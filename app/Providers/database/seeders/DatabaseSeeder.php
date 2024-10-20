@@ -1,14 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Providers\database\seeders;
 
 use App\Models\Ingredient;
 use App\Models\Merchant;
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\ValueObject\UnitConverter;
 use Illuminate\Database\Seeder;
-
 class DatabaseSeeder extends Seeder
 {
     /**

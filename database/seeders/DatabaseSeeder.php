@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ingredient;
+use App\Models\Merchant;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\ValueObject\UnitConverter;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +16,51 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $merchant = Merchant::create([
+            'name' => 'Merchant 1',
+            'email' => 'test@test.com'
         ]);
+
+        $beef = Ingredient::create([
+            'merchant_id' => $merchant->id,
+            'name' => 'Beef',
+            'daily_total_stock' => UnitConverter::fromKgToGram(20),
+            'current_stock' => UnitConverter::fromKgToGram(20),
+            'alert_notification_sent' => false
+        ]);
+
+        $cheese = Ingredient::create(
+            [
+                'merchant_id' => $merchant->id,
+                'name' => 'Cheese',
+                'daily_total_stock' => UnitConverter::fromKgToGram(5),
+                'current_stock' => UnitConverter::fromKgToGram(5),
+                'alert_notification_sent' => false
+            ]
+        );
+
+        $onion = Ingredient::create(
+            [
+                'merchant_id' => $merchant->id,
+                'name' => 'Onion',
+                'daily_total_stock' => UnitConverter::fromKgToGram(1),
+                'current_stock' => UnitConverter::fromKgToGram(1),
+                'alert_notification_sent' => false
+            ]
+        );
+
+
+        $product = $merchant->products()->create([
+            'name' => 'Cheese Burger',
+            'price' => 10
+        ]);
+
+        // create cheeseburger ingredients with 150g Beef and 30g Cheese and 20g Onion
+        $product->ingredients()->attach([
+            $beef->id => ['ingredient_weight' => 150],
+            $cheese->id => ['ingredient_weight' => 30],
+            $onion->id => ['ingredient_weight' => 20]
+        ]);
+
     }
 }

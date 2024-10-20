@@ -18,4 +18,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class)->withPivot('quantity');
     }
+
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class,'product_ingredients')->withPivot(['ingredient_weight']);
+    }
 }

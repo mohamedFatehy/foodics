@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\OrderCreatedEvent;
 use App\Models\Order;
 use App\Repositories\Ingredient\IIngredientRepository;
 use App\Repositories\Order\IOrderRepository;
@@ -29,19 +30,23 @@ class OrderService
 
         $order = $this->orderRepository->createOrder($products);
 
-        $this->ingredientRepository->update($this->getUpdatedIngredients($order));
+        $updatedIngredients = $this->getUpdatedIngredients($order);
+        $this->ingredientRepository->update($updatedIngredients);
 
         // TODO notify the merchant about the insufficient stock
-
+        OrderCreatedEvent::dispatch($updatedIngredients);
         DB::commit();
     }
 
+    /**
+     * @throws \Exception
+     */
     private function getUpdatedIngredients(Order $order): array
     {
         $ingredientUpdates = [];
         $order->products->each(function ($product) use (&$ingredientUpdates) {
-            $product->ingredients->each(function ($ingredient) use (&$ingredientUpdates, $product) {
-
+            $product->ingredients->each(
+                function ($ingredient) use (&$ingredientUpdates, $product) {
                 $ingredientUpdates = $this->createOrUpdateIngredient($ingredientUpdates, $product, $ingredient);
                 $this->validateIngredientStocks($ingredientUpdates[$ingredient->id], $ingredient);
 

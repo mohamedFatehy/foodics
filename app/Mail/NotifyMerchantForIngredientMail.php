@@ -13,6 +13,7 @@ class NotifyMerchantForIngredientMail extends Mailable
     use Queueable, SerializesModels;
 
     public string $ingredientName;
+
     public string $merchantName;
 
     /**
@@ -43,7 +44,7 @@ class NotifyMerchantForIngredientMail extends Mailable
         return new Content(
             view: 'email',
             with: [
-                'content' => 'Ingredient shortage alert for ( ' . $this->ingredientName . ' ) in your inventory is already less than 50% of the daily total stock.',
+                'content' => 'Ingredient shortage alert for ( '.$this->ingredientName.' ) in your inventory is already less than 50% of the daily total stock.',
                 'merchantName' => $this->merchantName,
             ],
         );

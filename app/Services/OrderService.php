@@ -47,10 +47,10 @@ class OrderService
         $order->products->each(function ($product) use (&$ingredientUpdates) {
             $product->ingredients->each(
                 function ($ingredient) use (&$ingredientUpdates, $product) {
-                $ingredientUpdates = $this->createOrUpdateIngredient($ingredientUpdates, $product, $ingredient);
-                $this->validateIngredientStocks($ingredientUpdates[$ingredient->id], $ingredient);
+                    $ingredientUpdates = $this->createOrUpdateIngredient($ingredientUpdates, $product, $ingredient);
+                    $this->validateIngredientStocks($ingredientUpdates[$ingredient->id], $ingredient);
 
-            });
+                });
         });
 
         return $ingredientUpdates;

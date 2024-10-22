@@ -39,7 +39,7 @@ it('test create order failure due to in sufficient quantity', function () {
      */
 
     $response = $this->postJson('/api/orders', ['products' => [
-        ['product_id' => 1, 'quantity' => 60]
+        ['product_id' => 1, 'quantity' => 60],
     ]]);
 
     // in case of onion 20*60 = 1200g which is more than the stock
@@ -60,7 +60,7 @@ it('test create order successfully and Ingredients successfully deducted', funct
 
     $orderQuantity = 8;
     $response = $this->postJson('/api/orders', ['products' => [
-        ['product_id' => 3, 'quantity' => $orderQuantity]
+        ['product_id' => 3, 'quantity' => $orderQuantity],
     ]]);
 
     $response->assertStatus(ResponseStatus::HTTP_CREATED);
@@ -135,7 +135,6 @@ it('test create order successfully and Ingredients successfully deducted with mu
         }
     }
 });
-
 
 it('test create order successfully and Ingredients successfully deducted and event fired', function () {
 
@@ -313,4 +312,3 @@ it('test create order successfully and Ingredients successfully deducted and ema
     Queue::assertNotPushed(SendEmailToMerchantJob::class);
 
 });
-

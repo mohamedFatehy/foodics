@@ -24,6 +24,7 @@ class OrderController extends ApiControllerController
     {
         try {
             $this->orderService->create($request->products);
+
             return self::SuccessResponse('order created', ResponseStatus::HTTP_CREATED);
         } catch (\Exception $e) {
             // log error for observability with event_id as identifier for the log searching

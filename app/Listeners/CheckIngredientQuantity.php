@@ -16,7 +16,7 @@ class CheckIngredientQuantity
     public function handle(OrderCreatedEvent $event): void
     {
         try {
-            foreach ($event->updatedIngredients as $id  => $ingredient) {
+            foreach ($event->updatedIngredients as $id => $ingredient) {
                 if ($ingredient->shouldNotifyMerchant()) {
                     $ingredientModel = Ingredient::with('merchant')->find($id);
                     if ($ingredientModel->alert_notification_sent) {
@@ -24,10 +24,11 @@ class CheckIngredientQuantity
                     }
                     $ingredientModel->update(['alert_notification_sent' => true]);
                     // Send email to the merchant for the ingredient shortage in Queue
-                    SendEmailToMerchantJob::dispatch($ingredientModel->name,$ingredientModel->merchant->name,$ingredientModel->merchant->email);
+                    SendEmailToMerchantJob::dispatch($ingredientModel->name, $ingredientModel->merchant->name, $ingredientModel->merchant->email);
                 }
             }
         } catch (\Exception $e) {
             Log::log('error', $e->getMessage(), ['event_id' => LogEventIds::LogEvent_In_Sending_Email_To_Merchant]);
-        }}
+        }
+    }
 }

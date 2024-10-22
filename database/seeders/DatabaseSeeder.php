@@ -4,7 +4,6 @@ namespace database\seeders;
 
 use App\Models\Ingredient;
 use App\Models\Merchant;
-use App\Models\Order;
 use App\ValueObject\UnitConverter;
 use Illuminate\Database\Seeder;
 

@@ -19,7 +19,8 @@
    - ``` composer install```
 - In the composer install step the `.env` file will be created from the `.env.example` file, you can change the database configuration in the `.env` file and the ports as you like to not conflict with your local ports.
 - Run the Helper commands in the make file to create the database and run the migrations and seed the database and serve the project using the following command:
-   - ``` make start```  and keep it running in the Terminal or if  you faced an issue run ```make fresh``` 
+   - run ```make start-fresh``` and if you are already ran this command before you can run ```make serve``` to start the project. 
+   - after that the project should be running on port 8000 and you can test it by open http://localhost:8000/
 - This project requires the following ports to be free:
     - 8000 for serving the project
     - 3306 for the database

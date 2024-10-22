@@ -12,6 +12,9 @@ start:
 queue:
 	@./vendor/bin/sail artisan queue:work --tries=3
 
-reset:
+fresh:
 	@./vendor/bin/sail artisan migrate:fresh --seed
 	@./vendor/bin/sail artisan serve
+
+test:
+	@./vendor/bin/sail pest

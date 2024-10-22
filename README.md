@@ -7,60 +7,74 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Installation Guide For Foodics Task
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Install PHP 8.3 or higher
+- Install Composer
+- Clone the repository using the following command:
+   - ``` git clone https://github.com/mohamedFatehy/foodics.git```
+- Go to inside the project directory using the following command:
+   - ``` cd foodics```
+- Install the project dependencies using the following command:
+   - ``` composer install```
+- In the composer install step the `.env` file will be created from the `.env.example` file, you can change the database configuration in the `.env` file and the ports as you like to not conflict with your local ports.
+- Run the Helper commands in the make file to create the database and run the migrations and seed the database and serve the project using the following command:
+   - ``` make start```  and keep it running in the Terminal or if  you faced an issue run ```make fresh``` 
+- This project requires the following ports to be free:
+    - 8000 for serving the project
+    - 3306 for the database
+    - 8025 for the mailing server
+- To make the Queue work you need to run the following command and Keep it running in another Terminal:
+   - ```make queue```
+- To be able to View the Sent Emails you can need to open that webpage:
+   - <a href="http://localhost:8025/">Open Mail</a>
+- To Run the Tests you can run the following command:
+   - ```make test```
+- Finally to stop the project you can run the following command:
+   - ```make down```
+- open postman and import this collection from the root of the project `Foodics.postman_collection.json` and start testing the APIs.:
+   - Inside this collection you will find the create order ApI 
+  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Project Structure
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- The project is built using **Laravel** 11.9 and **php** 8.3 and **mysql** 8.0 and **mailpit** for the mailing server.
+- The project is built using the MVC design pattern and service oriented architecture and the repository pattern.
+- The project is built using the Laravel Queues to send the emails.
+- The Project is Built Containerized using Docker and controlled using Laravel/Sail Package.
+- The Project using Seeder to Seed Data to the Database and the Seeder is located in the `database/seeders` directory. that contains
+   - 1 Merchant
+   - 3 ingredients as mentioned in the task
+   - 2 product that contains the 3 ingredients
 
-## Learning Laravel
+## Database Design
+![ERD](ERD.png)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## API Endpoints
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- create order API
+    - This API is used to create a new order and if the one ingredient reached less than 50% of the daily stock an email will be sent to the merchant to notify him about the stock shortage.
+    - The API is a POST request to the following endpoint:
+        - ```/api/orders```
+    - The API requires the following parameters:
+        - `products` : the items of the order in the following format:
+            - ```json
+                [
+                    {
+                        "product_id": 1,
+                        "quantity": 2
+                    }
+                ]
+              ```
+        - The API will return the following response:
+          - ```json
+                 {
+                    "success": true,
+                    "message": "order created",
+                    "data": []
+                 }
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This Project is under [MIT license](https://opensource.org/licenses/MIT).
